@@ -1,95 +1,87 @@
 ---
-description: Explore-Plan-Code-Commit with subagent context isolation
+description: Explore-Plan-Code-Commit with intelligent issue scoping
 ---
 
-# Question-Asking Rules (Apply Throughout)
-- Ask questions ONE AT A TIME - wait for answer before asking next question
-- Keep questions clear and specific
+# Stage 1: Check Starting Point
 
-# Stage 1: What? (Main Agent)
-- Ask what the user wants to achieve
-- If GitHub issue referenced, read it
-- Ask clarifying questions about the GOAL (ONE AT A TIME)
-- Output: Clear success statement
+Does the user have a scoped issue?
+- Look for: issue number, pasted issue content, or clear acceptance criteria
+- If YES → Go to Stage 3 (Implementation Planning)
+- If NO → Go to Stage 2 (Get Scope)
 
-# Stage 2: Explore (SUBAGENT: codebase-scanner)
-Use the codebase-scanner subagent to:
-- Read relevant files in its fresh 200K context
-- Build understanding of current implementation
-- Save findings to .claude/docs/tasks/codebase-findings.md
-- Return 3-5 bullet summary only
+# Stage 2: Get Scope (SUBAGENT: issue-scoper)
 
-# Stage 3: Reflection Checkpoint (Main Agent)
-Read the codebase-findings.md summary, then reflect back:
-- What you understand we're trying to build
-- Key requirements
-- Main technical challenges
+Say: "Let me scope this properly first."
 
-## Risk Assessment
-Evaluate if this task involves:
-- Payment processing or financial transactions
-- User authentication or authorisation
-- Data integrity or privacy concerns
-- Critical business logic with multiple edge cases
-- Modifications to security-sensitive code
-- Complex state management or workflows
+Call `issue-scoper` subagent to:
+- Understand the feature
+- Explore the codebase
+- Create INVEST-compliant issue(s)
+- Return structured scope
 
-**If NO risks identified:** Continue to Stage 4 (Clarify) automatically.
+When issue-scoper returns:
+- If multiple issues: Ask "Which should we implement first?"
+- If single issue: Say "Here's the scope. Ready to implement?"
 
-**If YES to any:** Pause and explain:
-- Which risks were identified
-- Why TDD would be safer here
-- Ask: "This has [specific risks]. Should we switch to /tdd for this?"
+Save selected issue to `.claude/docs/tasks/current-issue.md` for reference.
 
-[WAIT FOR USER CONFIRMATION ONLY IF RISKS FOUND]
+# Stage 3: Implementation Planning (Main Agent)
 
-
-# Stage 4: Clarify (Main Agent)
-- Ask informed questions ONE AT A TIME based on exploration
-- User preferences/decisions only
-- NOT "where is X?" questions
-
-# Stage 5: Plan (Main Agent with Sequential Thinking)
-- Use sequential thinking
-- Consider 2+ approaches
-- Explain trade-offs
+Working from the issue (either provided or from issue-scoper):
+- Use sequential thinking to consider approaches
+- Map each acceptance criterion to implementation steps
+- Consider 2+ approaches with trade-offs
 - Recommend best approach
 
 [WAIT FOR APPROVAL]
 
-# Stage 6: Implement (Main Agent)
-- New branch
-- Incremental commits
-- Tests
+# Stage 4: Risk Check
 
-# Stage 7: Automated Testing (SUBAGENT: test-validator)
+Evaluate if this involves:
+- Payment/financial transactions
+- Authentication/authorization
+- Data privacy concerns
+- Complex business logic
 
-Use test-validator subagent to:
-- Read the implemented code in fresh context
-- Read test requirements from .claude/docs/tasks/test-plan.md
-- Execute appropriate tests (Puppeteer for UI, Supabase queries for data, test suite for logic)
-- Save detailed results to .claude/docs/tasks/test-results.md
-- Return summary: ✅ PASS / ❌ FAIL with critical issues only
+If risks found:
+- Ask: "This has [risks]. Should we use /tdd instead?"
+- [WAIT FOR ANSWER]
 
-[If FAILED: Main agent reviews findings and fixes issues, then re-triggers test-validator]
+# Stage 5: Implementation (Main Agent)
 
-# Stage 8: Code Review (SUBAGENT: code-reviewer)
-- Use code-reviewer subagent (read-only, fresh context)
-- Present findings
+Create feature branch:
+```bash
+git checkout -b feat/[brief-description]
+```
 
-# Stage 9: Commit & Document (Main Agent)
-- git diff review
-- Conventional commits
-- Update docs/issues
+Implement the approved plan:
+- Address each acceptance criterion
+- Write tests alongside code
+- Commit logical chunks
 
+# Stage 6: Code Review (SUBAGENT: code-reviewer)
 
-# Stage 9: Commit & Document (Main Agent)
-- git diff review
-- Conventional commits
-- Update docs/issues
+Call code-reviewer to:
+- Check against acceptance criteria
+- Review code quality
+- Verify test coverage
 
-# Stage 10: Record Session History (SUBAGENT: progress-update)
-Use progress-update subagent to:
-- Record closed issue to project_journey.md
-- Record merged PR details
-- Add session summary with what was actually built
+Fix any critical issues.
+
+# Stage 7: Wrap Up
+
+Verify all acceptance criteria met:
+```
+✓ [Criterion 1] - DONE
+✓ [Criterion 2] - DONE  
+✓ [Criterion 3] - DONE
+```
+
+Final commit and push:
+```bash
+git add -A
+git commit -m "feat: [description]"
+git push -u origin feat/[branch]
+```
+
+Ask: "Ready to create PR?"
