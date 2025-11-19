@@ -1,0 +1,32 @@
+# Sensitive files
+.credentials.json
+*.env
+*.env.*
+
+# Runtime/session data
+debug/
+session-env/
+shell-snapshots/
+file-history/
+history.jsonl
+todos/
+projects/
+statsig/
+ide/
+catalyst-ui-kit/
+plugins/
+
+# macOS
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node modules (if any get added later)
+node_modules/

@@ -1,0 +1,72 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "maxTokens": 8192,
+  "permissions": {
+    "allow": [
+      "mcp__github__search_repositories",
+      "mcp__github__list_issues",
+      "mcp__github__create_issue",
+      "mcp__github__update_issue",
+      "mcp__github__list_pull_requests",
+      "mcp__github__create_pull_request",
+      "mcp__github__get_file_contents",
+      "mcp__github__push_files",
+      "mcp__github__create_branch",
+      "mcp__github__create_or_update_file",
+      "mcp__github__get_issue",
+      "mcp__github__fork_repository",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue comment:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "WebSearch"
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(gh issue create:*)",
+      "Write(package.json)",
+      "Write(package-lock.json)"
+    ],
+    "deny": [
+      "Read(./.env*)",
+      "Read(./secrets/**)",
+      "Bash(sudo*)",
+      "Bash(rm -rf*)",
+      "Bash(git push origin main)",
+      "Bash(npm publish)"
+    ]
+  },
+  "enabledPlugins": {
+    "git-workflow@claude-code-templates": true,
+    "supabase-toolkit@claude-code-templates": true,
+    "nextjs-vercel-pro@claude-code-templates": true,
+    "testing-suite@claude-code-templates": true,
+    "security-pro@claude-code-templates": true,
+    "ai-ml-toolkit@claude-code-templates": true,
+    "devops-automation@claude-code-templates": true,
+    "documentation-generator@claude-code-templates": true,
+    "performance-optimizer@claude-code-templates": true,
+    "project-management-suite@claude-code-templates": true
+  }
+}
