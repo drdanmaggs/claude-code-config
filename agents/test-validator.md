@@ -89,23 +89,24 @@ VERDICT: ✅ ALL PASS or ❌ BLOCKING FAILURES
 Spawn if UI changes detected:
 ```
 "Your job: Test UI behavior using Puppeteer MCP server.
+
 IMPORTANT: Use the mcp__puppeteer__ tools available to you. Do NOT install puppeteer via npm.
 
 Setup:
 1. Ensure dev server running on localhost:3000
-2. Launch headless browser with Puppeteer
+2. Use puppeteer_navigate to launch browser and navigate to page
 
 Testing checklist based on acceptance criteria:
-□ Navigate to relevant page
-□ Execute user interactions (clicks, typing, form submissions)
+□ Use puppeteer_navigate to go to relevant page
+□ Use puppeteer_click for user interactions (clicks, form submissions)
+□ Use puppeteer_screenshot to capture key states
+□ Use puppeteer_evaluate to check for console errors
 □ Verify expected UI changes occur
-□ Check for console errors
 □ Verify no JavaScript errors
 □ Verify no unhandled promise rejections
-□ Take screenshots of key states
 
 For each acceptance criterion:
-- Action: [what user does]
+- Action: [what user does via puppeteer tools]
 - Expected: [what should happen]
 - Actual: [what did happen]
 - Screenshot: [filename if relevant]
