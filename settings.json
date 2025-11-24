@@ -1,6 +1,7 @@
 {
   "model": "claude-sonnet-4-20250514",
   "maxTokens": 8192,
+  "alwaysThinkingEnabled": false,
   "permissions": {
     "allow": [
       "Read",
@@ -17,14 +18,43 @@
       "Bash(cat*)",
       "Bash(grep*)",
       "Bash(find*)",
-      "Bash(xargs*)",          
-      "Bash(ps*)",             
-      "Bash(kill*)",       
+      "Bash(xargs*)",
+      "Bash(ps*)",
+      "Bash(kill*)",
+      "Bash(pkill*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(openssl:*)",
+      "Bash(curl:*)",
+      "Bash(sed:*)",
+      "Bash(echo:*)",
+      "Bash(sips:*)",
+      "Bash(cwebp:*)",
+      "Bash(python3:*)",
+      "Bash(lsof:*)",
+      "Bash(lighthouse:*)",
+      "Bash(pnpm:*)",
+      "Bash(vercel:*)",
+      "Bash(code:*)",
+      "Bash(claude mcp:*)",
+      "Bash(env)",
+      "Bash(compgen:*)",
+      "Bash(true)",
       "WebSearch",
       "web_fetch",
+      "WebFetch(domain:*)",
+      "SlashCommand(/epc*)",
       "mcp__github__*",
       "mcp__filesystem__*",
-      "mcp__notion__*"        
+      "mcp__notion__*",
+      "mcp__sequential-thinking__*",
+      "mcp__supabase__*",
+      "mcp__vercel__*",
+      "mcp__puppeteer__*",
+      "mcp__shadcn__*",
+      "Read(/Users/danielmaggs/Desktop/**)",
+      "Read(/Users/danielmaggs/Downloads/**)",
+      "Read(/var/folders/**)"
     ],
     "ask": [
       "Bash(git push origin main)",
@@ -40,5 +70,8 @@
       "Bash(npm publish)"
     ]
   },
-  "alwaysThinkingEnabled": true
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
 }

@@ -109,39 +109,55 @@ export default function Counter() {
 
 ### Philosophy
 - Catalyst components are **source code you own**, not a library dependency
-- Copy components into `/components/` and customize them directly
+- Copy components into `/components/ui/` and customize them directly
 - They're a starting point that evolves into your own component system
-- Don't isolate Catalyst in `/ui/` or `/catalyst/` subdirectories
+- Organize components by purpose as codebase grows
 
 ### File Structure (Next.js App Router)
 ```
 /components/
-  ├── button.tsx           ← Catalyst base (customize as needed)
-  ├── badge.tsx            ← Catalyst base
-  ├── input.tsx            ← Catalyst base
-  ├── heading.tsx          ← Catalyst base
-  └── app-navbar.tsx       ← Custom component (uses Catalyst)
+  ├── ui/                      # Base Catalyst components
+  │   ├── button.tsx
+  │   ├── badge.tsx
+  │   ├── input.tsx
+  │   ├── dialog.tsx
+  │   ├── navbar.tsx
+  │   └── ... (all Catalyst base components)
+  ├── layout/                  # Layout & navigation
+  │   └── app-navbar.tsx
+  ├── forms/                   # Form-related components
+  │   └── form-modal.tsx
+  └── features/                # Business logic/feature components
+      ├── project-tasks.tsx
+      ├── task-list.tsx
+      └── ... (feature-specific components)
 ```
 
 ### Import Convention
-- Use `@/components/button`, `@/components/badge` etc.
-- No subdirectory prefixes (e.g., NOT `@/components/ui/button`)
+- Base UI components: `@/components/ui/button`, `@/components/ui/input`
+- Layout components: `@/components/layout/app-navbar`
+- Form components: `@/components/forms/form-modal`
+- Feature components: `@/components/features/task-list`
 
-### Custom Components
-For app-specific components as projects grow:
-- **Simple custom components**: Keep in `/components/` alongside Catalyst
-- **Complex features**: Consider `/components/features/` subdirectory
-- **Layout compositions**: Consider `/components/layouts/` subdirectory
-- **Start simple**: Don't organize prematurely - refactor when `/components/` feels cluttered
+### Organization Guidelines
+- **ui/**: Base Catalyst components only - buttons, inputs, dialogs, etc.
+- **layout/**: Navigation, headers, footers, page layouts
+- **forms/**: Form wrappers, form modals, form-specific logic
+- **features/**: Business logic components tied to specific features
+- Start simple: Don't create subdirectories until you need them
 
 ### Usage Pattern
 ```tsx
-// Import Catalyst components directly
-import { Button } from '@/components/button'
-import { Heading } from '@/components/heading'
+// Import Catalyst components from ui/
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+
+// Import app-specific components from their subdirectories
+import { AppNavbar } from '@/components/layout/app-navbar'
+import { TaskList } from '@/components/features/task-list'
 
 // Customize Catalyst components by editing their source
-// Open components/button.tsx and modify styling/behavior
+// Open components/ui/button.tsx and modify styling/behavior
 ```
 
 ## Project Management
